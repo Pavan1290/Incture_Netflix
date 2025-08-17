@@ -1,10 +1,4 @@
-/*
-  Script: hydrate-posters.js
-  Purpose: For each movie in src/store/movies.js, try to fetch an iTunes artwork URL.
-  - If found, set movie.img to the URL
-  - If not found, drop the movie from the list
-  Writes back the updated file.
-*/
+
 
 import fs from 'fs'
 import path from 'path'
@@ -15,9 +9,9 @@ const storePath = path.join(root, 'src', 'store', 'movies.js')
 
 function readMoviesModule(filePath) {
   const code = fs.readFileSync(filePath, 'utf8')
-  // Execute the module in a VM to get the movies array
+  
   const sandbox = { exports: {}, module: { exports: {} } }
-  // Convert "export default movies" to module.exports = movies
+  
   const transformed = code.replace(/export\s+default\s+movies\s*;?\s*$/m, 'module.exports = movies;')
   vm.createContext(sandbox)
   const script = new vm.Script(transformed, { filename: 'movies.js' })
@@ -53,7 +47,7 @@ function upscaleArtwork(url) {
 }
 
 async function getArtworkUrl(movie) {
-  const API = 'https://itunes.apple.com/search'
+  const API = 'https:
   const term = movie.title
   const indianLangs = new Set(['Hindi','Kannada','Tamil','Telugu','Malayalam'])
   const primary = indianLangs.has(movie.language) ? 'IN' : 'US'
@@ -93,7 +87,7 @@ async function getArtworkUrl(movie) {
 function writeMovies(filePath, movies) {
   const header = 'const movies = [\n'
   const body = movies.map(m => {
-    // Keep ordering and fields; ensure strings are quoted and escaped
+    
     return `    { id: ${m.id}, title: ${JSON.stringify(m.title)}, img: ${JSON.stringify(m.img||'')}, rating: ${m.rating}, genre: ${JSON.stringify(m.genre)}, year: ${m.year}, language:${JSON.stringify(m.language)}, description: ${JSON.stringify(m.description)} }`
   }).join(',\n')
   const footer = '\n]\n\nexport default movies\n'

@@ -1,4 +1,4 @@
-// Build a YouTube search URL for a movie/series trailer
+
 export function getTrailerUrl(movie) {
   const title = movie?.title || ''
   const year = movie?.year ? ` ${movie.year}` : ''

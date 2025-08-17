@@ -4,19 +4,19 @@ const AuthContext = createContext()
 
 function AuthProvider({ children }) {
   const [authed, setAuthed] = useState(() => {
-    try { return localStorage.getItem('pavans-netflix-auth') === '1' } catch { /* ignore storage errors */ return false }
+    try { return localStorage.getItem('pavans-netflix-auth') === '1' } catch (e) { void e; return false }
   })
 
   const signIn = (id) => {
     try {
       localStorage.setItem('pavans-netflix-auth', '1')
       if (id) localStorage.setItem('pavans-netflix-last-id', id)
-    } catch { /* ignore storage errors */ }
+  } catch (e) { void e }
     setAuthed(true)
   }
 
   const signOut = () => {
-    try { localStorage.removeItem('pavans-netflix-auth') } catch { /* ignore storage errors */ }
+  try { localStorage.removeItem('pavans-netflix-auth') } catch (e) { void e }
     setAuthed(false)
   }
 

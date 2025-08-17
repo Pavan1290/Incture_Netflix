@@ -18,7 +18,7 @@ export default function Navbar() {
       setLoginId(user?.email || user?.username || lastId || '')
       const storedAvatar = localStorage.getItem('pavans-netflix-avatar')
       if (storedAvatar) setAvatar(storedAvatar)
-    } catch { /* ignore */ }
+  } catch (e) { void e }
   }, [authed])
 
   const initials = useMemo(() => (loginId?.trim()?.[0] || 'P').toUpperCase(), [loginId])

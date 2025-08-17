@@ -25,7 +25,7 @@ export default function Signup() {
   function onSubmit(e) {
     e.preventDefault()
     if (!canSubmit) return
-    try { localStorage.setItem('pavans-netflix-user', JSON.stringify({ username, email })) } catch { /* ignore storage errors */ }
+  try { localStorage.setItem('pavans-netflix-user', JSON.stringify({ username, email })) } catch (e) { void e }
     signIn(username)
     nav('/')
   }

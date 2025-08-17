@@ -7,11 +7,11 @@ body[data-theme="dark"] .navbar { --bs-bg-opacity:1; background-color:#0b0b0b !i
 
 .footer { border-top:1px solid #111 }
 
-/* Card hover polish for Bootstrap cards */
+
 .card:hover { transform: translateY(-2px); transition: transform .2s ease }
 .card-img-top { image-rendering: auto; filter: contrast(1.02) saturate(1.05) }
 
-/* Splash */
+
 .splash { position:fixed; inset:0; background:#000; display:grid; place-items:center; z-index:9999; animation: fadeout 0.4s ease 2.4s forwards }
 .splash .netflix-container { display:flex; justify-content:center; align-items:center; height:60vh }
 .splash-svg { margin: 5vmin }
@@ -30,12 +30,12 @@ body[data-theme="dark"] .navbar { --bs-bg-opacity:1; background-color:#0b0b0b !i
 @keyframes segin { to { opacity:1; transform: none } }
 @keyframes fadeout { to { opacity:0; visibility:hidden } }
 
-/* Smooth theme transitions */
+
 :root, body, [data-theme] {
 	transition: background-color .35s ease, color .35s ease, border-color .35s ease;
 }
 
-/* Animated theme toggle */
+
 .theme-toggle {
 	--w: 46px; --h: 26px; --pad: 3px; --knob: 20px;
 	position: relative;

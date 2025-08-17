@@ -19,7 +19,7 @@ export default function Profile() {
       if (storedAvatar) setAvatar(storedAvatar)
       const passSet = localStorage.getItem('pavans-netflix-password-set') === '1'
       setPasswordMasked(passSet ? '********' : 'Not set')
-    } catch { /* ignore storage errors */ }
+  } catch (e) { void e }
   }, [authed])
 
   function onSignOut() {
@@ -33,7 +33,7 @@ export default function Profile() {
     const reader = new FileReader()
     reader.onload = () => {
       const dataUrl = reader.result
-      try { localStorage.setItem('pavans-netflix-avatar', dataUrl) } catch { /* ignore storage errors */ }
+  try { localStorage.setItem('pavans-netflix-avatar', dataUrl) } catch (e) { void e }
       setAvatar(String(dataUrl))
     }
     reader.readAsDataURL(file)
@@ -43,7 +43,7 @@ export default function Profile() {
     e.preventDefault()
     const pwd = (document.getElementById('profile-new-password') || {}).value || ''
     if (!pwd) return
-    try { localStorage.setItem('pavans-netflix-password-set', '1') } catch { /* ignore storage errors */ }
+  try { localStorage.setItem('pavans-netflix-password-set', '1') } catch (e) { void e }
     setPasswordMasked('********')
     setSaving(true)
     setTimeout(()=> setSaving(false), 500)
