@@ -17,12 +17,22 @@ export default function Login() {
   const hints = useMemo(() => passwordStrengthHints(password), [password])
   const canSubmit = validateEmail(email) && validatePassword(password)
 
+  function signIn() {
+    localStorage.setItem('pavans-netflix-auth', '1')
+    nav('/')
+  }
+
   function onSubmit(e) {
     e.preventDefault()
     if (!canSubmit) return
-    // Fake auth: mark logged-in in localStorage
-    localStorage.setItem('pavans-netflix-auth', '1')
-    nav('/')
+    signIn()
+  }
+
+  function onKeyDown(e) {
+    if (e.key === 'Enter' && canSubmit) {
+      e.preventDefault()
+      signIn()
+    }
   }
 
   const showEmailHint = focus.email && email.trim().length > 0 && !validateEmail(email)
@@ -47,6 +57,7 @@ export default function Login() {
               onChange={e=>setEmail(e.target.value)}
               onFocus={()=>setFocus(f=>({...f,email:true}))}
               onBlur={()=>setFocus(f=>({...f,email:false}))}
+              onKeyDown={onKeyDown}
             />
             {showEmailHint && <div className="text-warning small mt-1">Enter a valid email address.</div>}
           </div>
@@ -59,6 +70,7 @@ export default function Login() {
               onChange={e=>setPassword(e.target.value)}
               onFocus={()=>setFocus(f=>({...f,password:true}))}
               onBlur={()=>setFocus(f=>({...f,password:false}))}
+              onKeyDown={onKeyDown}
             />
             {showPasswordHints && (
               <div className="auth-helper text-secondary mt-2">
