@@ -1,10 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useEffect, useMemo, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import '../styles/auth.css'
 import { passwordStrengthHints, validateEmail, validatePassword, validateUsername } from '../utils/validation'
+import AuthProvider from '../context/AuthContext'
 
 export default function Signup() {
   const nav = useNavigate()
+  const { signIn } = useContext(AuthProvider.Context)
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -23,9 +25,8 @@ export default function Signup() {
   function onSubmit(e) {
     e.preventDefault()
     if (!canSubmit) return
-    // Fake account creation: store in localStorage and mark logged-in
-    localStorage.setItem('pavans-netflix-user', JSON.stringify({ username, email }))
-    localStorage.setItem('pavans-netflix-auth', '1')
+    try { localStorage.setItem('pavans-netflix-user', JSON.stringify({ username, email })) } catch { /* ignore storage errors */ }
+    signIn(username)
     nav('/')
   }
 

@@ -1,10 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useEffect, useMemo, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 import '../styles/auth.css'
 import { passwordStrengthHints, validateEmail, validatePassword, validateUsername } from '../utils/validation'
+import AuthProvider from '../context/AuthContext'
 
 export default function Login() {
   const nav = useNavigate()
+  const { signIn } = useContext(AuthProvider.Context)
   const [id, setId] = useState('') // username or email
   const [password, setPassword] = useState('')
   const [focus, setFocus] = useState({ id: false, password: false })
@@ -19,23 +21,21 @@ export default function Login() {
   const idValid = isEmailLike ? validateEmail(id) : validateUsername(id)
   const canSubmit = idValid && validatePassword(password)
 
-  function signIn() {
-    localStorage.setItem('pavans-netflix-auth', '1')
-    // optionally remember last id
-    localStorage.setItem('pavans-netflix-last-id', id)
+  function doSignIn() {
+    signIn(id)
     nav('/')
   }
 
   function onSubmit(e) {
     e.preventDefault()
     if (!canSubmit) return
-    signIn()
+    doSignIn()
   }
 
   function onKeyDown(e) {
     if (e.key === 'Enter' && canSubmit) {
       e.preventDefault()
-      signIn()
+      doSignIn()
     }
   }
 
@@ -92,7 +92,14 @@ export default function Login() {
               </div>
             )}
           </div>
-          <button className="btn btn-danger w-100 mt-2" disabled={!canSubmit}>Sign In</button>
+          <button
+            type="submit"
+            className="btn btn-danger w-100 mt-2"
+            disabled={!canSubmit}
+            onClick={(e)=>{ if(!canSubmit){ e.preventDefault(); return } }}
+          >
+            Sign In
+          </button>
           <div className="text-secondary mt-3">New to Pavan's Netflix? <Link to="/signup" className="text-white">Create an account</Link>.</div>
         </form>
       </div>
