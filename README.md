@@ -1,6 +1,10 @@
 # Pavan’s Netflix — Incture Assignment
 
-Assignment project from Incture to clone Netflix. Implemented by Pavan (Sahyadri College of Engineering and Management).
+Assignment project from Incture to clone Netflix.
+
+This project was completed under the guidance of Abhishek Kumar Jha (Trainer, Incture).
+
+Implemented by Pavan (Sahyadri College of Engineering and Management).
 
 ## Project overview (10 points)
 
@@ -52,4 +56,29 @@ Prerequisites: Node.js 18+ and npm. No external API keys required.
   npm run test        # watch mode
   npm run test:run    # single run
   ```
- 
+
+## Acknowledgements
+
+- Special thanks to Abhishek Kumar Jha for mentorship, guidance on best practices, and review throughout the assignment.
+
+## Deployment
+
+Netlify (recommended for SPA):
+
+1) Connect your GitHub repo in Netlify or drag-and-drop the built `dist/` folder.
+
+2) If connecting the repo, set:
+
+- Build command: `npm run build`
+- Publish directory: `dist`
+
+1) SPA routing is handled via `public/_redirects` (already included):
+
+- `/*    /index.html   200`
+
+Local preview of the production build:
+
+```bash
+npm run build
+npm run preview
+```
