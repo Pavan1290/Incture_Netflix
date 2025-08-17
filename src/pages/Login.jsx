@@ -1,13 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 import '../styles/auth.css'
-import { passwordStrengthHints, validateEmail, validatePassword } from '../utils/validation'
+import { passwordStrengthHints, validateEmail, validatePassword, validateUsername } from '../utils/validation'
 
 export default function Login() {
   const nav = useNavigate()
-  const [email, setEmail] = useState('')
+  const [id, setId] = useState('') // username or email
   const [password, setPassword] = useState('')
-  const [focus, setFocus] = useState({ email: false, password: false })
+  const [focus, setFocus] = useState({ id: false, password: false })
 
   useEffect(() => {
     document.body.classList.add('auth-bg')
@@ -15,10 +15,14 @@ export default function Login() {
   }, [])
 
   const hints = useMemo(() => passwordStrengthHints(password), [password])
-  const canSubmit = validateEmail(email) && validatePassword(password)
+  const isEmailLike = id.includes('@')
+  const idValid = isEmailLike ? validateEmail(id) : validateUsername(id)
+  const canSubmit = idValid && validatePassword(password)
 
   function signIn() {
     localStorage.setItem('pavans-netflix-auth', '1')
+    // optionally remember last id
+    localStorage.setItem('pavans-netflix-last-id', id)
     nav('/')
   }
 
@@ -35,7 +39,7 @@ export default function Login() {
     }
   }
 
-  const showEmailHint = focus.email && email.trim().length > 0 && !validateEmail(email)
+  const showIdHint = focus.id && id.trim().length > 0 && !idValid
   const showPasswordHints = focus.password && password.length > 0
 
   return (
@@ -50,16 +54,20 @@ export default function Login() {
           <h1 className="mb-3">Sign In</h1>
           <div className="mb-3">
             <input
-              type="email"
+              type="text"
               className="form-control auth-input"
-              placeholder="Email"
-              value={email}
-              onChange={e=>setEmail(e.target.value)}
-              onFocus={()=>setFocus(f=>({...f,email:true}))}
-              onBlur={()=>setFocus(f=>({...f,email:false}))}
+              placeholder="Email or username"
+              value={id}
+              onChange={e=>setId(e.target.value)}
+              onFocus={()=>setFocus(f=>({...f,id:true}))}
+              onBlur={()=>setFocus(f=>({...f,id:false}))}
               onKeyDown={onKeyDown}
             />
-            {showEmailHint && <div className="text-warning small mt-1">Enter a valid email address.</div>}
+            {showIdHint && (
+              <div className="text-warning small mt-1">
+                {isEmailLike ? 'Enter a valid email address.' : 'Username must be letters only, minimum 5 characters.'}
+              </div>
+            )}
           </div>
           <div className="mb-2">
             <input
