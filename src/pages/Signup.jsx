@@ -9,7 +9,7 @@ export default function Signup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
-  const [touched, setTouched] = useState({})
+  const [focus, setFocus] = useState({ username:false, email:false, password:false, confirm:false })
 
   useEffect(() => { document.body.classList.add('auth-bg'); return () => document.body.classList.remove('auth-bg') }, [])
 
@@ -22,13 +22,17 @@ export default function Signup() {
 
   function onSubmit(e) {
     e.preventDefault()
-    setTouched({ username: true, email: true, password: true, confirm: true })
     if (!canSubmit) return
     // Fake account creation: store in localStorage and mark logged-in
     localStorage.setItem('pavans-netflix-user', JSON.stringify({ username, email }))
     localStorage.setItem('pavans-netflix-auth', '1')
     nav('/')
   }
+
+  const showUserHint = focus.username && username.trim().length > 0 && !userOK
+  const showEmailHint = focus.email && email.trim().length > 0 && !emailOK
+  const showPasswordHints = focus.password && password.length > 0
+  const showConfirmHint = focus.confirm && confirm.length > 0 && !matchOK
 
   return (
     <div className="auth-overlay min-vh-100">
@@ -41,28 +45,62 @@ export default function Signup() {
         <form className="auth-card w-100" onSubmit={onSubmit}>
           <h1 className="mb-3">Create account</h1>
           <div className="mb-3">
-            <input type="text" className="form-control auth-input" placeholder="Username (letters only, min 5)" value={username} onChange={e=>setUsername(e.target.value)} onBlur={()=>setTouched(t=>({...t,username:true}))} />
-            {touched.username && !userOK && <div className="text-warning small mt-1">Only letters, minimum 5, no numbers or special characters.</div>}
+            <input
+              type="text"
+              className="form-control auth-input"
+              placeholder="Username (letters only, min 5)"
+              value={username}
+              onChange={e=>setUsername(e.target.value)}
+              onFocus={()=>setFocus(f=>({...f,username:true}))}
+              onBlur={()=>setFocus(f=>({...f,username:false}))}
+            />
+            {showUserHint && <div className="text-warning small mt-1">Only letters, minimum 5, no numbers or special characters.</div>}
           </div>
           <div className="mb-3">
-            <input type="email" className="form-control auth-input" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} onBlur={()=>setTouched(t=>({...t,email:true}))} />
-            {touched.email && !emailOK && <div className="text-warning small mt-1">Enter a valid email address.</div>}
+            <input
+              type="email"
+              className="form-control auth-input"
+              placeholder="Email"
+              value={email}
+              onChange={e=>setEmail(e.target.value)}
+              onFocus={()=>setFocus(f=>({...f,email:true}))}
+              onBlur={()=>setFocus(f=>({...f,email:false}))}
+            />
+            {showEmailHint && <div className="text-warning small mt-1">Enter a valid email address.</div>}
           </div>
           <div className="mb-2">
-            <input type="password" className="form-control auth-input" placeholder="Password" value={password} onChange={e=>setPassword(e.target.value)} onBlur={()=>setTouched(t=>({...t,password:true}))} />
-            <div className="auth-helper text-secondary mt-2">
-              <ul className="strength-list">
-                <li className={hints.length? 'strength-ok':'strength-bad'}>8+ characters</li>
-                <li className={hints.upper? 'strength-ok':'strength-bad'}>Uppercase letter</li>
-                <li className={hints.lower? 'strength-ok':'strength-bad'}>Lowercase letter</li>
-                <li className={hints.digit? 'strength-ok':'strength-bad'}>Number</li>
-                <li className={hints.special? 'strength-ok':'strength-bad'}>Special character</li>
-              </ul>
-            </div>
+            <input
+              type="password"
+              className="form-control auth-input"
+              placeholder="Password"
+              value={password}
+              onChange={e=>setPassword(e.target.value)}
+              onFocus={()=>setFocus(f=>({...f,password:true}))}
+              onBlur={()=>setFocus(f=>({...f,password:false}))}
+            />
+            {showPasswordHints && (
+              <div className="auth-helper text-secondary mt-2">
+                <ul className="strength-list">
+                  <li className={hints.length? 'strength-ok':'strength-bad'}>8+ characters</li>
+                  <li className={hints.upper? 'strength-ok':'strength-bad'}>Uppercase letter</li>
+                  <li className={hints.lower? 'strength-ok':'strength-bad'}>Lowercase letter</li>
+                  <li className={hints.digit? 'strength-ok':'strength-bad'}>Number</li>
+                  <li className={hints.special? 'strength-ok':'strength-bad'}>Special character</li>
+                </ul>
+              </div>
+            )}
           </div>
           <div className="mb-3">
-            <input type="password" className="form-control auth-input" placeholder="Confirm password" value={confirm} onChange={e=>setConfirm(e.target.value)} onBlur={()=>setTouched(t=>({...t,confirm:true}))} />
-            {touched.confirm && !matchOK && <div className="text-warning small mt-1">Passwords must match.</div>}
+            <input
+              type="password"
+              className="form-control auth-input"
+              placeholder="Confirm password"
+              value={confirm}
+              onChange={e=>setConfirm(e.target.value)}
+              onFocus={()=>setFocus(f=>({...f,confirm:true}))}
+              onBlur={()=>setFocus(f=>({...f,confirm:false}))}
+            />
+            {showConfirmHint && <div className="text-warning small mt-1">Passwords must match.</div>}
           </div>
           <button className="btn btn-danger w-100 mt-2" disabled={!canSubmit}>Create account</button>
           <div className="text-secondary mt-3">Already have an account? <Link to="/login" className="text-white">Sign in</Link>.</div>
