@@ -4,6 +4,7 @@ import data from '../store/movies'
 import Poster from '../components/Poster'
 import MovieCard from '../components/MovieCard'
 import FavoritesProvider from '../context/FavoritesContext'
+import { getTrailerUrl } from '../utils/trailer'
 
 export default function Details() {
   const { id } = useParams()
@@ -12,6 +13,8 @@ export default function Details() {
 
   const { addFavorite, removeFavorite, isFavorite } = useContext(FavoritesProvider.Context)
   if (!movie) return <div className="container py-5 text-secondary">Movie not found.</div>
+
+  function openTrailer() { window.open(getTrailerUrl(movie), '_blank', 'noopener') }
 
   return (
     <div className="container py-4">
@@ -25,7 +28,7 @@ export default function Details() {
           <p className="mb-3">{movie.description}</p>
           <div className="d-flex gap-2">
             <a href="#play" className="btn btn-primary">Play</a>
-            <a href="#trailer" className="btn btn-outline-secondary">Trailer</a>
+            <button className="btn btn-outline-secondary" onClick={openTrailer}>Trailer</button>
             {isFavorite(movie.id) ? (
               <button className="btn btn-outline-warning" onClick={()=>removeFavorite(movie.id)}>Remove Favorite</button>
             ) : (
