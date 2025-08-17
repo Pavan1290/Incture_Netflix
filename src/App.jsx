@@ -14,6 +14,8 @@ import Splash from './components/Splash'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import AuthProvider from './context/AuthContext'
+import Profile from './pages/Profile'
+import SignOut from './pages/SignOut'
 
 function RequireAuth({ children }) {
   const { authed } = useContext(AuthProvider.Context)
@@ -60,6 +62,8 @@ function AppRoutes({ splashDone }) {
         <Route path="/favorites" element={<RequireAuth><Favorites /></RequireAuth>} />
         <Route path="/search" element={<RequireAuth><Search /></RequireAuth>} />
         <Route path="/movie/:id" element={<RequireAuth><Details /></RequireAuth>} />
+        <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
+        <Route path="/signout" element={<SignOut />} />
       </Routes>
       <footer className="footer text-center text-secondary py-4">© {new Date().getFullYear()} Pavan's Netflix</footer>
     </>

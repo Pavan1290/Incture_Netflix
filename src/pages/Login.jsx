@@ -23,6 +23,7 @@ export default function Login() {
 
   function doSignIn() {
     signIn(id)
+    try { alert(`Welcome ${id}!`) } catch { /* ignore alert errors */ }
     nav('/')
   }
 
