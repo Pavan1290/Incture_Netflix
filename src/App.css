@@ -1,0 +1,67 @@
+:root { color-scheme: dark; --bg:#000; --fg:#eee; --muted:#888; --card:#151515; --accent:#e50914 }
+[data-theme="light"] { color-scheme: light; --bg:#fff; --fg:#111; --muted:#555; --card:#f5f5f5 }
+
+html, body { background:var(--bg); color:var(--fg) }
+body[data-theme="light"] .navbar { --bs-bg-opacity:1; background-color:#f8f9fa !important }
+body[data-theme="dark"] .navbar { --bs-bg-opacity:1; background-color:#0b0b0b !important }
+
+.footer { border-top:1px solid #111 }
+
+/* Card hover polish for Bootstrap cards */
+.card:hover { transform: translateY(-2px); transition: transform .2s ease }
+.card-img-top { image-rendering: auto; filter: contrast(1.02) saturate(1.05) }
+
+/* Splash */
+.splash { position:fixed; inset:0; background:#000; display:grid; place-items:center; z-index:9999; animation: fadeout 0.4s ease 2.4s forwards }
+.splash .netflix-container { display:flex; justify-content:center; align-items:center; height:60vh }
+.splash-svg { margin: 5vmin }
+.base { fill:#E50914; transition: fill .4s }
+.shadow-start { stop-color: #000; stop-opacity: .6 }
+.shadow-end { stop-color: #000; stop-opacity: 0 }
+.seg { opacity:0; transform: translateY(10px); animation: segin .5s ease forwards }
+.seg1 { animation-delay: .1s }
+.seg2 { animation-delay: .25s }
+.seg3 { animation-delay: .4s }
+.seg4 { animation-delay: .55s }
+.seg5 { animation-delay: .7s }
+.seg6 { animation-delay: .85s }
+.seg7 { animation-delay: 1s }
+.splash-title { position:fixed; bottom:8vh; width:100%; text-align:center; color:#fff; font-weight:800; letter-spacing:1px }
+@keyframes segin { to { opacity:1; transform: none } }
+@keyframes fadeout { to { opacity:0; visibility:hidden } }
+
+/* Smooth theme transitions */
+:root, body, [data-theme] {
+	transition: background-color .35s ease, color .35s ease, border-color .35s ease;
+}
+
+/* Animated theme toggle */
+.theme-toggle {
+	--w: 46px; --h: 26px; --pad: 3px; --knob: 20px;
+	position: relative;
+	width: var(--w);
+	height: var(--h);
+	border: none;
+	border-radius: 999px;
+	background: linear-gradient(135deg, #e9ecef, #cbd5e1);
+	color: #f59e0b;
+	padding: var(--pad);
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	cursor: pointer;
+	transition: background .3s ease, box-shadow .3s ease;
+}
+.theme-toggle:is(:hover,:focus-visible){ box-shadow: 0 0 0 3px rgba(99,102,241,.25) }
+.theme-toggle.is-dark{ background: linear-gradient(135deg, #111827, #0f172a); color:#60a5fa }
+.theme-toggle__icon{ position:absolute; inset:auto 6px auto auto; opacity:0; transform: scale(.8); transition: opacity .25s ease, transform .25s ease }
+.theme-toggle__icon--moon{ inset:auto auto auto 6px }
+.theme-toggle.is-light .theme-toggle__icon--sun{ opacity:1; transform: scale(1) }
+.theme-toggle.is-dark .theme-toggle__icon--moon{ opacity:1; transform: scale(1) }
+.theme-toggle__knob{
+	position:absolute; top: var(--pad); left: var(--pad);
+	width: var(--knob); height: var(--knob); border-radius:50%;
+	background: white; box-shadow: 0 2px 6px rgba(0,0,0,.25);
+	transition: left .28s cubic-bezier(.4,0,.2,1), background .3s ease;
+}
+.theme-toggle.is-dark .theme-toggle__knob{ left: calc(var(--w) - var(--pad) - var(--knob)); background:#0ea5e9 }
