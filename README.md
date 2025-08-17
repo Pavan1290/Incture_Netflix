@@ -6,7 +6,7 @@ This project was completed under the guidance of Abhishek Kumar Jha (Trainer, In
 
 Implemented by Pavan (Sahyadri College of Engineering and Management).
 
-## Project overview (10 points)
+## Project overview 
 
 - Built with React (Vite) and Bootstrap as a single-page app with client-side routing.
 - Loader/splash first, then Sign In/Sign Up flow before entering the app.
