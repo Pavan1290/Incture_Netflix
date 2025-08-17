@@ -1,0 +1,50 @@
+/* Auth page styles for Pavan's Netflix */
+body.auth-bg {
+  background: url('https://media.geeksforgeeks.org/wp-content/uploads/20240313102506/NetlfixHome-min.jpeg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.auth-overlay {
+  background-color: rgba(0,0,0,0.6);
+}
+
+.auth-card {
+  max-width: 420px;
+  background-color: rgba(0,0,0,0.75);
+  border-radius: 8px;
+  padding: 28px 28px 24px 28px;
+}
+
+.auth-card h1 {
+  color: #fff;
+}
+
+.auth-input {
+  background-color: transparent !important;
+  color: #fff !important;
+}
+
+.auth-helper {
+  font-size: 0.85rem;
+}
+
+.strength-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.strength-list li::before {
+  content: '•';
+  margin-right: 6px;
+}
+
+.strength-ok { color: #22c55e; }
+.strength-bad { color: #ef4444; }
+
+.footer-lite {
+  background-color: rgba(0,0,0,0.85);
+}
