@@ -107,7 +107,14 @@ export default function Signup() {
           <div className="text-secondary mt-3">Already have an account? <Link to="/login" className="text-white">Sign in</Link>.</div>
         </form>
       </div>
-      <footer className="footer-lite text-center text-secondary py-3">© {new Date().getFullYear()} Pavan's Netflix</footer>
+      <footer
+        className="footer-lite text-center text-secondary py-3"
+        onClick={() => {
+          try { alert('Clone project by Pavan S with guidance of Abhishek Kumar Jha (trainer).') } catch (e) { void e }
+        }}
+      >
+        © Pavan Incture Netflix 2025
+      </footer>
     </div>
   )
 }

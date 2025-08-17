@@ -65,7 +65,14 @@ function AppRoutes({ splashDone }) {
         <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
         <Route path="/signout" element={<SignOut />} />
       </Routes>
-      <footer className="footer text-center text-secondary py-4">© {new Date().getFullYear()} Pavan's Netflix</footer>
+      <footer
+        className="footer text-center text-secondary py-4"
+        onClick={() => {
+          try { alert('Clone project by Pavan S with guidance of Abhishek Kumar Jha (trainer).') } catch (e) { void e }
+        }}
+      >
+        © Pavan Incture Netflix 2025
+      </footer>
     </>
   )
 }
